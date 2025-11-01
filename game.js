@@ -126,14 +126,32 @@ function updateMessage(text) {
 
 // Check if position is valid (not a wall)
 function isValidMove(x, y) {
-    const col = Math.floor(x);
-    const row = Math.floor(y);
+    // Define the collision margin based on Pacman's size
+    const margin = 0.3; // Smaller margin to allow tight movement
 
-    if (row < 0 || row >= ROWS || col < 0 || col >= COLS) {
-        return false;
+    // Check all four corners of Pacman's bounding box
+    const corners = [
+        { x: x - margin, y: y - margin }, // Top-left
+        { x: x + margin, y: y - margin }, // Top-right
+        { x: x - margin, y: y + margin }, // Bottom-left
+        { x: x + margin, y: y + margin }  // Bottom-right
+    ];
+
+    // All corners must be in valid (non-wall) tiles
+    for (const corner of corners) {
+        const col = Math.floor(corner.x);
+        const row = Math.floor(corner.y);
+
+        if (row < 0 || row >= ROWS || col < 0 || col >= COLS) {
+            return false;
+        }
+
+        if (maze[row][col] === 1) {
+            return false;
+        }
     }
 
-    return maze[row][col] !== 1;
+    return true;
 }
 
 // Move Pacman
