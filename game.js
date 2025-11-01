@@ -52,8 +52,8 @@ const maze = [
 
 // Pacman object
 const pacman = {
-    x: 14,
-    y: 23,
+    x: 14.0,
+    y: 23.5,
     direction: 0, // 0 = right, 1 = down, 2 = left, 3 = up
     nextDirection: 0,
     speed: 0.15,
@@ -83,10 +83,10 @@ class Ghost {
 
 // Create ghosts
 const ghosts = [
-    new Ghost(13, 14, '#FF0000'), // Blinky (red)
-    new Ghost(14, 14, '#FFB8FF'), // Pinky (pink)
-    new Ghost(13, 15, '#00FFFF'), // Inky (cyan)
-    new Ghost(14, 15, '#FFB851')  // Clyde (orange)
+    new Ghost(13.5, 14.5, '#FF0000'), // Blinky (red)
+    new Ghost(14.5, 14.5, '#FFB8FF'), // Pinky (pink)
+    new Ghost(13.5, 15.5, '#00FFFF'), // Inky (cyan)
+    new Ghost(14.5, 15.5, '#FFB851')  // Clyde (orange)
 ];
 
 // Count initial pellets
@@ -331,8 +331,8 @@ function checkGhostCollision() {
 
 // Reset positions
 function resetPositions() {
-    pacman.x = 14;
-    pacman.y = 23;
+    pacman.x = 14.0;
+    pacman.y = 23.5;
     pacman.direction = 0;
     pacman.nextDirection = 0;
 
