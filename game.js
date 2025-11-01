@@ -127,7 +127,7 @@ function updateMessage(text) {
 // Check if position is valid (not a wall)
 function isValidMove(x, y) {
     // Define the collision margin based on Pacman's size
-    const margin = 0.3; // Smaller margin to allow tight movement
+    const margin = 0.25; // Smaller hitbox to allow smooth movement
 
     // Check all four corners of Pacman's bounding box
     const corners = [
