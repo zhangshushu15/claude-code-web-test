@@ -127,7 +127,8 @@ function updateMessage(text) {
 // Check if position is valid (not a wall)
 function isValidMove(x, y) {
     // Define the collision margin - this represents the radius of Pacman's hitbox
-    const margin = 0.4; // Larger hitbox to prevent wall clipping
+    // Must be close to 0.5 to ensure we check adjacent tiles (from X.5 center, need to reach X+1.0)
+    const margin = 0.48; // Close to half a tile to properly check adjacent walls
 
     // Check all four corners AND the four edge midpoints of Pacman's bounding box
     const points = [
@@ -146,11 +147,27 @@ function isValidMove(x, y) {
         const col = Math.floor(point.x);
         const row = Math.floor(point.y);
 
-        if (row < 0 || row >= ROWS || col < 0 || col >= COLS) {
+        // Check bounds
+        if (col < 0 || col >= COLS || row < 0 || row >= ROWS) {
             return false;
         }
 
+        // Check if current tile is a wall
         if (maze[row][col] === 1) {
+            return false;
+        }
+
+        // Also check if we're close to the next tile and it's a wall
+        const colFrac = point.x - col;
+        const rowFrac = point.y - row;
+
+        // Check adjacent tile in X direction if close to edge
+        if (colFrac > 0.5 && col + 1 < COLS && maze[row][col + 1] === 1) {
+            return false;
+        }
+
+        // Check adjacent tile in Y direction if close to edge
+        if (rowFrac > 0.5 && row + 1 < ROWS && maze[row + 1][col] === 1) {
             return false;
         }
     }
