@@ -126,21 +126,25 @@ function updateMessage(text) {
 
 // Check if position is valid (not a wall)
 function isValidMove(x, y) {
-    // Define the collision margin based on Pacman's size
-    const margin = 0.25; // Smaller hitbox to allow smooth movement
+    // Define the collision margin - this represents the radius of Pacman's hitbox
+    const margin = 0.4; // Larger hitbox to prevent wall clipping
 
-    // Check all four corners of Pacman's bounding box
-    const corners = [
-        { x: x - margin, y: y - margin }, // Top-left
-        { x: x + margin, y: y - margin }, // Top-right
-        { x: x - margin, y: y + margin }, // Bottom-left
-        { x: x + margin, y: y + margin }  // Bottom-right
+    // Check all four corners AND the four edge midpoints of Pacman's bounding box
+    const points = [
+        { x: x - margin, y: y - margin }, // Top-left corner
+        { x: x + margin, y: y - margin }, // Top-right corner
+        { x: x - margin, y: y + margin }, // Bottom-left corner
+        { x: x + margin, y: y + margin }, // Bottom-right corner
+        { x: x, y: y - margin },          // Top edge center
+        { x: x, y: y + margin },          // Bottom edge center
+        { x: x - margin, y: y },          // Left edge center
+        { x: x + margin, y: y }           // Right edge center
     ];
 
-    // All corners must be in valid (non-wall) tiles
-    for (const corner of corners) {
-        const col = Math.floor(corner.x);
-        const row = Math.floor(corner.y);
+    // All points must be in valid (non-wall) tiles
+    for (const point of points) {
+        const col = Math.floor(point.x);
+        const row = Math.floor(point.y);
 
         if (row < 0 || row >= ROWS || col < 0 || col >= COLS) {
             return false;
